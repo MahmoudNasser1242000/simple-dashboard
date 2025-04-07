@@ -13,6 +13,16 @@ import {
 import { useRouter } from "next/navigation";
 import PriceFilteration from "../PriceFilteration/PriceFilteration";
 import { Input } from "@/components/ui/input";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ArrowDownWideNarrow } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const HomePagfeContent = ({ category }: { category: string }) => {
     const [products, setProducts] = useState<IProduct[]>([]);
@@ -21,10 +31,11 @@ const HomePagfeContent = ({ category }: { category: string }) => {
     const [fromPrice, setFromPrice] = useState<number>(0);
     const [toPrice, setToPrice] = useState<number>(0);
     const [keyword, setKeyword] = useState<string>("");
+    const [sortBy, setSortBy] = useState<string>("");
     const router = useRouter();
 
     const getProducts = async () => {
-        const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword);
+        const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword, sortBy);
         setProducts(products);
     }
 
@@ -42,7 +53,7 @@ const HomePagfeContent = ({ category }: { category: string }) => {
 
     useEffect(() => {
         getProducts();
-    }, [category, fromPrice, toPrice, keyword]);
+    }, [category, fromPrice, toPrice, keyword, sortBy]);
 
     useEffect(() => {
         getAllCategories();
@@ -70,7 +81,7 @@ const HomePagfeContent = ({ category }: { category: string }) => {
             <PriceFilteration highPrice={highPrice} fromPrice={fromPrice} toPrice={toPrice} setFromPrice={setFromPrice} setToPrice={setToPrice} />
         </div>
 
-        <div className="flex items-center justify-center pt-3 pb-12">
+        <div className="flex items-center justify-center pt-3 pb-8">
             <label htmlFor="search" className="w-full sm:w-[50%]">
                 <Input
                     placeholder="Search by title..."
@@ -82,6 +93,25 @@ const HomePagfeContent = ({ category }: { category: string }) => {
                 />
             </label>
         </div>
+
+        <div className="flex items-center justify-between my-8">
+            <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <Button variant={"outline"} size={"icon"} className="rounded-sm p-0 focus:ring-none cursor-pointer">
+                        <ArrowDownWideNarrow className="size-6" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => { setSortBy("") }}>Default</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { setSortBy("title asc") }}>Title</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { setSortBy("price desc") }}>High Price</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { setSortBy("price asc") }}>Low Price</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
+        
         <ProductsTable products={products} />
     </div>;
 };

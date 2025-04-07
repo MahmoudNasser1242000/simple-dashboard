@@ -38,11 +38,11 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
                                     />
                                 </td>
                                 <td className="px-3 py-2 whitespace-nowrap">{product.title}</td>
-                                <td className="px-3 py-2 whitespace-nowrap">{product.description.split(" ").slice(0, 5).join("")}...</td>
+                                <td className="px-3 py-2 whitespace-nowrap">{product.description.split(" ").slice(0, 5).join(" ")}...</td>
                                 <td className="px-3 py-2 whitespace-nowrap">${product.price}</td>
                                 <td className="px-3 py-2 whitespace-nowrap">${product.category}</td>
                                 <td className="px-3 py-3 whitespace-nowrap flex items-center gap-2">
-                                    <Button variant={"ghost"} size={"icon"} className="rounded-sm p-0">
+                                    <Button variant={"ghost"} size={"icon"} className="rounded-sm p-0 cursor-pointer">
                                         <Trash2 className="size-5 text-red-500" />
                                     </Button>
                                 </td>

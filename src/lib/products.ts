@@ -15,9 +15,13 @@ export const getAllProductsWithfilteration = async (
     category: string,
     fromPrice: number,
     toPrice: number,
-    keyword: string
+    keyword: string,
+    sortBy: string
 ) => {
-    const query = `*[_type == "products" ${category ? `&& category == "${category}"` : ""} && ${!toPrice ? `price >= ${fromPrice}` : `price >= ${fromPrice} && price <= ${toPrice}`} ${keyword ? `&& title match "*${keyword}*"` : ""}]{
+    const query = `*[_type == "products" 
+            ${category ? `&& category == "${category}"` : ""} && 
+            ${!toPrice ? `price >= ${fromPrice}` : `price >= ${fromPrice} && price <= ${toPrice}`} 
+            ${keyword ? `&& title match "*${keyword}*"` : ""}] | order(${sortBy? sortBy : "createdAt desc"}){
         _id,title,description,image,price,category,
         "imageUrl": image.asset->url,
     }[]`;
@@ -27,6 +31,7 @@ export const getAllProductsWithfilteration = async (
         fromPrice,
         toPrice,
         keyword,
+        sortBy,
     });
     return products as IProduct[];
 };
