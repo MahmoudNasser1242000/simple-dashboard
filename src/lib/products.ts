@@ -11,12 +11,12 @@ export const getAllProducts = async () => {
     return products as IProduct[];
 }
 
-export const getAllProductsWithfilteration = async (category: string) => {
-    const query = `*[_type == "products" ${category ? `&& category == "${category}"` : ''}]{
+export const getAllProductsWithfilteration = async (category: string, fromPrice: number, toPrice: number) => {
+    const query = `*[_type == "products" ${category ? `&& category == "${category}"` : ''} && ${!toPrice ? `price >= ${fromPrice}` : `price >= ${fromPrice} && price <= ${toPrice}`} ]{
         _id,title,description,image,price,category,
         "imageUrl": image.asset->url,
     }[]`;
 
-    const products = await client.fetch(query, { category });
+    const products = await client.fetch(query, { category, fromPrice, toPrice });
     return products as IProduct[];
 }

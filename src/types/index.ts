@@ -7,3 +7,11 @@ export interface IProduct {
     category: string;
     imageUrl: string;
 }
+
+export interface IPriceFilteration {
+    highPrice: number;
+    fromPrice: number;
+    setFromPrice: React.Dispatch<React.SetStateAction<number>>;
+    toPrice: number;
+    setToPrice: React.Dispatch<React.SetStateAction<number>>;
+}
