@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ProductsTable from "../ProductsTable/ProductsTable";
 import { IProduct } from "@/types";
-import { getAllProducts, getAllProductsWithfilteration } from "@/lib/products";
+import { getAllProducts } from "@/lib/products";
 import {
     Select,
     SelectContent,
@@ -23,9 +23,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ArrowDownWideNarrow } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "@/redux/store";
+import { getProductsWithFilteration } from "@/redux/reducers/products/productsReducer";
 
 const HomePagfeContent = ({ category }: { category: string }) => {
-    const [products, setProducts] = useState<IProduct[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [highPrice, setHighPrice] = useState<number>(0);
     const [fromPrice, setFromPrice] = useState<number>(0);
@@ -34,10 +36,8 @@ const HomePagfeContent = ({ category }: { category: string }) => {
     const [sortBy, setSortBy] = useState<string>("");
     const router = useRouter();
 
-    const getProducts = async () => {
-        const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword, sortBy);
-        setProducts(products);
-    }
+    const { products } = useSelector((state: RootState) => state.products)
+    const dispatch = useAppDispatch();
 
     const getAllCategories = async () => {
         const products = await getAllProducts();
@@ -52,7 +52,7 @@ const HomePagfeContent = ({ category }: { category: string }) => {
     }
 
     useEffect(() => {
-        getProducts();
+        dispatch(getProductsWithFilteration({category, fromPrice, toPrice, keyword, sortBy}));
     }, [category, fromPrice, toPrice, keyword, sortBy]);
 
     useEffect(() => {
@@ -65,7 +65,7 @@ const HomePagfeContent = ({ category }: { category: string }) => {
     return <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
             <Select value={category ? category : "all"} onValueChange={(value: string) => { router.push(`/${value !== "all" ? `?category=${value}` : ""}`) }}>
-                <SelectTrigger className="w-full sm:w-[50%] py-6 rounded-sm px-4 bg-white dark:bg-gray-900 hover:dark:bg-gray-900 border border-gray-300 dark:border-gray-600 flex items-center justify-between gap-2 text-gray-900 dark:text-white">
+                <SelectTrigger className="w-full sm:w-[50%] cursor-pointer py-6 rounded-sm px-4 bg-white dark:bg-gray-900 hover:dark:bg-gray-900 border border-gray-300 dark:border-gray-600 flex items-center justify-between gap-2 text-gray-900 dark:text-white">
                     <SelectValue placeholder="Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -94,10 +94,10 @@ const HomePagfeContent = ({ category }: { category: string }) => {
             </label>
         </div>
 
-        <div className="flex items-center justify-between my-8">
+        <div className="flex items-center justify-between mt-8 mb-5">
             <DropdownMenu>
                 <DropdownMenuTrigger>
-                    <Button variant={"outline"} size={"icon"} className="rounded-sm p-0 focus:ring-none cursor-pointer">
+                    <Button variant={"outline"} size={"icon"} className="rounded-sm focus:ring-none cursor-pointer p-5">
                         <ArrowDownWideNarrow className="size-6" />
                     </Button>
                 </DropdownMenuTrigger>
@@ -111,7 +111,7 @@ const HomePagfeContent = ({ category }: { category: string }) => {
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-        
+
         <ProductsTable products={products} />
     </div>;
 };

@@ -15,3 +15,17 @@ export interface IPriceFilteration {
     toPrice: number;
     setToPrice: React.Dispatch<React.SetStateAction<number>>;
 }
+
+export interface IProductsSliceState {
+    loading: boolean,
+    error: string | null,
+    products: IProduct[],
+}
+
+export interface IProductsFilterationSlice {
+    category: string,
+    fromPrice: number,
+    toPrice: number,
+    keyword: string,
+    sortBy: string
+}
