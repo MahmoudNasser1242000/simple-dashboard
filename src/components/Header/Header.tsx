@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { ModeToggle } from "./ModeToggle"
 
 const Header = () => {
     return (
@@ -13,6 +14,7 @@ const Header = () => {
                 <span className="font-mono">My Dashbord</span>
             </div>
 
+            <ModeToggle />
         </header>
     )
 }
