@@ -26,14 +26,16 @@ import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/redux/store";
 import { getProductsWithFilteration } from "@/redux/reducers/products/productsReducer";
+import PaginationDemo from "@/components/Pagination/Pagination";
 
-const HomePagfeContent = ({ category }: { category: string }) => {
+const HomePagfeContent = ({ page, category }: { page: number, category: string }) => {
     const [categories, setCategories] = useState<string[]>([]);
     const [highPrice, setHighPrice] = useState<number>(0);
     const [fromPrice, setFromPrice] = useState<number>(0);
     const [toPrice, setToPrice] = useState<number>(0);
     const [keyword, setKeyword] = useState<string>("");
     const [sortBy, setSortBy] = useState<string>("");
+    const [length, setLength] = useState<number>(0);
     const router = useRouter();
 
     const { products } = useSelector((state: RootState) => state.products)
@@ -50,10 +52,17 @@ const HomePagfeContent = ({ category }: { category: string }) => {
         const prices = products.map((product: IProduct) => product.price);
         setHighPrice(Math.max(...prices));
     }
+    
+    const getTotalLength = async () => {
+        const products = await getAllProducts(category, fromPrice, toPrice, keyword);
+        setLength(products.length);
+    }
+
+    const limit = 5;
 
     useEffect(() => {
-        dispatch(getProductsWithFilteration({category, fromPrice, toPrice, keyword, sortBy}));
-    }, [category, fromPrice, toPrice, keyword, sortBy]);
+        dispatch(getProductsWithFilteration({category, fromPrice, toPrice, keyword, sortBy, page, limit}));
+    }, [category, fromPrice, toPrice, keyword, sortBy, page, limit]);
 
     useEffect(() => {
         getAllCategories();
@@ -62,6 +71,10 @@ const HomePagfeContent = ({ category }: { category: string }) => {
     useEffect(() => {
         getTheHighestPrice();
     }, []);
+
+    useEffect(() => {
+        getTotalLength();
+    }, [category, fromPrice, toPrice, keyword]);
     return <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
             <Select value={category ? category : "all"} onValueChange={(value: string) => { router.push(`/${value !== "all" ? `?category=${value}` : ""}`) }}>
@@ -113,6 +126,10 @@ const HomePagfeContent = ({ category }: { category: string }) => {
         </div>
 
         <ProductsTable products={products} />
+
+        <div className="mt-34 mb-20 flex justify-center items-center">
+            <PaginationDemo total={length / limit} page={page} category={category} />
+        </div>
     </div>;
 };
 

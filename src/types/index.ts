@@ -27,5 +27,7 @@ export interface IProductsFilterationSlice {
     fromPrice: number,
     toPrice: number,
     keyword: string,
-    sortBy: string
+    sortBy: string,
+    page: number,
+    limit: number,
 }

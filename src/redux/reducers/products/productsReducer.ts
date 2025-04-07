@@ -8,10 +8,14 @@ const initialState: IProductsSliceState = {
     products: [],
 }
 
-export const getProducts = createAsyncThunk("products/getProducts", async (_, thunkAPI) => {
+export const getProducts = createAsyncThunk("products/getProducts", async ({
+    category,
+    fromPrice,
+    toPrice,
+    keyword}: IProductsFilterationSlice, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-        const products = await getAllProducts();
+        const products = await getAllProducts(category, fromPrice, toPrice, keyword);
         return products;
     } catch (error) {
         return rejectWithValue("Something went wrong while fetching products")
@@ -23,11 +27,13 @@ export const getProductsWithFilteration = createAsyncThunk("products/getProducts
     fromPrice,
     toPrice,
     keyword,
-    sortBy
+    sortBy,
+    page,
+    limit,
 }: IProductsFilterationSlice, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-        const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword, sortBy);
+        const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword, sortBy, page, limit);
         return products;
     } catch (error) {
         return rejectWithValue("Something went wrong while fetching products")
