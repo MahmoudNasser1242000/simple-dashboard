@@ -4,6 +4,12 @@ import { IProduct } from "@/types";
 import Image from "next/image";
 import React from "react";
 import { ProductRowSkeleton } from "../ProductRowSkeleton/ProductRowSkeleton";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const ProductsTable = ({
     products,
@@ -40,7 +46,7 @@ const ProductsTable = ({
                                 </tr>
                             ) : (
                                 loading ? (
-                                    Array.from({length: 5}, (_, index) => <ProductRowSkeleton key={index} />)
+                                    Array.from({ length: 5 }, (_, index) => <ProductRowSkeleton key={index} />)
                                 ) : (
                                     products.map((product, index) => (
                                         <tr className="*:text-gray-900 *:first:font-medium dark:*:text-white" key={product._id}>
@@ -55,7 +61,20 @@ const ProductsTable = ({
                                                 />
                                             </td>
                                             <td className="px-3 py-2 whitespace-nowrap">{product.title}</td>
-                                            <td className="px-3 py-2 whitespace-nowrap">{product.description.split(" ").slice(0, 5).join(" ")}...</td>
+                                            <td className="px-3 py-2 whitespace-nowrap">
+                                                {
+                                                    <TooltipProvider>
+                                                        <Tooltip>
+                                                            <TooltipTrigger>
+                                                                {product.description.split(" ").slice(0, 5).join(" ")}...
+                                                            </TooltipTrigger>
+                                                            <TooltipContent className="w-[20%] sm:w-[45%] text-center">
+                                                                <p className="text-white w-full">{product.description}</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+                                                }
+                                            </td>
                                             <td className="px-3 py-2 whitespace-nowrap">${product.price}</td>
                                             <td className="px-3 py-2 whitespace-nowrap">${product.category}</td>
                                             <td className="px-3 py-3 whitespace-nowrap flex items-center gap-2">
