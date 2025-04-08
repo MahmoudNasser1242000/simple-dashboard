@@ -5,7 +5,7 @@ import React from "react";
 const PriceFilteration = ({highPrice, fromPrice, toPrice, setFromPrice, setToPrice}: IPriceFilteration) => {
     return <>
         <details
-            className="overflow-hidden w-full sm:w-[48%] lg:w-[40%] rounded-sm border border-gray-300 dark:border-gray-600 [&_summary::-webkit-details-marker]:hidden"
+            className="overflow-hidden w-full sm:w-[48%] rounded-sm border border-gray-300 dark:border-gray-600 [&_summary::-webkit-details-marker]:hidden"
         >
             <summary
                 className="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition dark:bg-gray-900 dark:text-white"

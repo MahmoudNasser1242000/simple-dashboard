@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="border-t border-gray-200 dark:border-gray-700">
             <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 w-fit mx-auto sm:w-auto sm:mx-0">
                         <Image
                             src={"/images/logo.svg"}
                             alt="logo"

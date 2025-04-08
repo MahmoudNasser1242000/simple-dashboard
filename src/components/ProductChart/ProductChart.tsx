@@ -31,6 +31,7 @@ export default function ProductChart({ products }: { products: IProduct[] }) {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: { position: "top" as const },
             tooltip: {
@@ -51,11 +52,13 @@ export default function ProductChart({ products }: { products: IProduct[] }) {
 
     return (
         <div className="w-full max-w-4xl mx-auto px-4 pt-34">
-            <h2 className="flex items-center justify-center gap-4 text-4xl font-bold text-center mb-24 text-black dark:text-white">
-                Products Price Chart
-                <ChartColumnIncreasing className="size-9" />
+            <h2 className="space-x-4 text-4xl font-bold text-center mb-24 text-black dark:text-white">
+                <span>Products Price Chart</span>
+                <ChartColumnIncreasing className="size-9 inline" />
             </h2>
-            <Bar data={data} options={options} />
+            <div className="w-full h-[350px]">
+                <Bar data={data} options={options} />
+            </div>
         </div>
     );
 }

@@ -78,9 +78,9 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
         getTotalLength();
     }, [category, fromPrice, toPrice, keyword]);
     return <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-wrap gap-y-5 items-center justify-between mb-8">
             <Select value={category ? category : "all"} onValueChange={(value: string) => { router.push(`/${value !== "all" ? `?category=${value}` : ""}`) }}>
-                <SelectTrigger className="w-full sm:w-[50%] cursor-pointer py-6 rounded-sm px-4 bg-white dark:bg-gray-900 hover:dark:bg-gray-900 border border-gray-300 dark:border-gray-600 flex items-center justify-between gap-2 text-gray-900 dark:text-white">
+                <SelectTrigger className="w-full sm:w-[48%] cursor-pointer py-6 rounded-sm px-4 bg-white dark:bg-gray-900 hover:dark:bg-gray-900 border border-gray-300 dark:border-gray-600 flex items-center justify-between gap-2 text-gray-900 dark:text-white">
                     <SelectValue placeholder="Categories" />
                 </SelectTrigger>
                 <SelectContent>
