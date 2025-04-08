@@ -21,12 +21,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ArrowDownWideNarrow } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowDownWideNarrow, MoveRight } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/redux/store";
 import { getProductsWithFilteration } from "@/redux/reducers/products/productsReducer";
 import PaginationDemo from "@/components/Pagination/Pagination";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const HomePagfeContent = ({ page, category }: { page: number, category: string }) => {
     const [categories, setCategories] = useState<string[]>([]);
@@ -127,8 +129,15 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
 
         <ProductsTable products={products} setLength={setLength} />
 
-        <div className="mt-34 mb-20 flex justify-center items-center">
+        <div className="mt-34 mb-16 flex justify-center items-center">
             <PaginationDemo total={length / limit} page={page} category={category} />
+        </div>
+
+        <div className="flex items-center justify-center mb-12">
+            <Link href={"/chart"} className={cn(buttonVariants({variant: "default"}), "flex items-center rounded-sm cursor-pointer py-5 text-white")}>
+                <span>View Products Chart</span>
+                <MoveRight />
+            </Link>
         </div>
     </div>;
 };
