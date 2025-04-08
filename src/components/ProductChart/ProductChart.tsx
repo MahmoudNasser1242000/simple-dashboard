@@ -7,6 +7,7 @@ import {
     BarElement,
     Tooltip,
     Legend,
+    TooltipItem,
 } from "chart.js";
 import { ChartColumnIncreasing } from "lucide-react";
 import { Bar } from "react-chartjs-2";
@@ -36,14 +37,14 @@ export default function ProductChart({ products }: { products: IProduct[] }) {
             legend: { position: "top" as const },
             tooltip: {
                 callbacks: {
-                    label: function (context: any) {
-                        const label = context.dataset.label || "";
-                        const value = context.parsed.y;
+                    label: function (tooltipItem: TooltipItem<"bar">) {
+                        const label = tooltipItem.dataset.label || "";
+                        const value = tooltipItem.raw as number; // `raw` contains the data value
                         return `${label}: $${value.toFixed(2)}`;
                     },
-                    title: function (context: any) {
-                        const index = context[0].dataIndex;
-                        return `Product: ${products.map((product: IProduct) => product.title)[index]}`;
+                    title: function (tooltipItems: TooltipItem<"bar">[]) {
+                        const index = tooltipItems[0].dataIndex;
+                        return `Product: ${products[index].title}`;
                     },
                 },
             },

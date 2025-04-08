@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ProductsTable from "../ProductsTable/ProductsTable";
 import { IProduct } from "@/types";
 import { getAllProducts } from "@/lib/products";
@@ -55,10 +55,10 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
         setHighPrice(Math.max(...prices));
     }
     
-    const getTotalLength = async () => {
+    const getTotalLength = useCallback(async () => {
         const products = await getAllProducts(category, fromPrice, toPrice, keyword);
         setLength(products.length);
-    }
+    }, [category, fromPrice, toPrice, keyword]);
 
     const limit = 5;
 
@@ -76,7 +76,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
 
     useEffect(() => {
         getTotalLength();
-    }, [category, fromPrice, toPrice, keyword]);
+    }, [getTotalLength]);
     return <div className="container mx-auto px-4 py-8">
         <div className="flex flex-wrap gap-y-5 items-center justify-between mb-8">
             <Select value={category ? category : "all"} onValueChange={(value: string) => { router.push(`/${value !== "all" ? `?category=${value}` : ""}`) }}>
