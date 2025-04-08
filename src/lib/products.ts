@@ -28,6 +28,7 @@ export const getAllProductsWithfilteration = async (
     page: number = 1,
     limit: number = 5
 ) => {
+    if (keyword) page = 1;
     const start = (page - 1) * limit;
     const end = start + limit;
 
