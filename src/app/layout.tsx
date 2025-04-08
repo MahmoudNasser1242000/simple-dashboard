@@ -7,6 +7,7 @@ import ReduxProvider from "@/components/ReduxProvider/ReduxProvider";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import Footer from "@/components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
             >
               <Header />
               {children}
+              <Footer />
             </ThemeProvider>
           </ReduxProvider>
         </body>
