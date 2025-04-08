@@ -40,7 +40,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
     const [length, setLength] = useState<number>(0);
     const router = useRouter();
 
-    const { products } = useSelector((state: RootState) => state.products)
+    const { products, loading, error } = useSelector((state: RootState) => state.products)
     const dispatch = useAppDispatch();
 
     const getAllCategories = async () => {
@@ -127,7 +127,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
             </DropdownMenu>
         </div>
 
-        <ProductsTable products={products} setLength={setLength} />
+        <ProductsTable products={products} loading={loading} error={error} setLength={setLength} />
 
         <div className="mt-34 mb-16 flex justify-center items-center">
             <PaginationDemo total={length / limit} page={page} category={category} />
