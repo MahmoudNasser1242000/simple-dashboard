@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
+import RemoveProductDialog from "@/components/RemoveProductDialog/RemoveProductDialog";
 import { urlFor } from "@/sanity/lib/image";
 import { IProduct } from "@/types";
-import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const ProductsTable = ({ products }: { products: IProduct[] }) => {
+const ProductsTable = ({ products, setLength }: { products: IProduct[], setLength: React.Dispatch<React.SetStateAction<number>> }) => {
     return <>
         <div className="overflow-x-auto rounded border border-gray-300 shadow-sm dark:border-gray-600 dark:shadow-sm-dark">
             <table className="min-w-full divide-y-2 divide-gray-200 dark:divide-gray-700">
@@ -42,9 +41,7 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
                                 <td className="px-3 py-2 whitespace-nowrap">${product.price}</td>
                                 <td className="px-3 py-2 whitespace-nowrap">${product.category}</td>
                                 <td className="px-3 py-3 whitespace-nowrap flex items-center gap-2">
-                                    <Button variant={"ghost"} size={"icon"} className="rounded-sm p-0 cursor-pointer">
-                                        <Trash2 className="size-5 text-red-500" />
-                                    </Button>
+                                    <RemoveProductDialog productId={product._id} setLength={setLength} />
                                 </td>
                             </tr>
                         ))

@@ -20,6 +20,7 @@ export interface IProductsSliceState {
     loading: boolean,
     error: string | null,
     products: IProduct[],
+    length: number,
 }
 
 export interface IProductsFilterationSlice {

@@ -15,7 +15,7 @@ export const getAllProducts = async (
         "imageUrl": image.asset->url,
     }[]`;
 
-    const products = await client.fetch(query);
+    const products = await client.fetch(query, {category, fromPrice, toPrice, keyword});
     return products as IProduct[];
 };
 
@@ -29,7 +29,7 @@ export const getAllProductsWithfilteration = async (
     limit: number = 5
 ) => {
     const start = (page - 1) * limit;
-    const end = (start + limit) - 1;
+    const end = start + limit;
 
     const query = `*[_type == "products" 
             ${category ? `&& category == "${category}"` : ""} && 
@@ -49,4 +49,8 @@ export const getAllProductsWithfilteration = async (
         limit,
     });
     return products as IProduct[];
+};
+
+export const removeProduct = async (productId: string) => {
+    await client.delete(productId);
 };

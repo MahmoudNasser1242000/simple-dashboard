@@ -125,7 +125,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
             </DropdownMenu>
         </div>
 
-        <ProductsTable products={products} />
+        <ProductsTable products={products} setLength={setLength} />
 
         <div className="mt-34 mb-20 flex justify-center items-center">
             <PaginationDemo total={length / limit} page={page} category={category} />

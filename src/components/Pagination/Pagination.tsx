@@ -9,7 +9,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-export default function PaginationDemo({ total, page, category  }: { total: number, page : number, category: string }) {
+export default function PaginationDemo({ total, page, category }: { total: number, page: number, category: string }) {
     return (
         <Pagination>
             <PaginationContent>
