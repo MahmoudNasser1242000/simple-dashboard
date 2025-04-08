@@ -18,8 +18,8 @@ export const getProducts = createAsyncThunk("products/getProducts", async ({
     try {
         const products = await getAllProducts(category, fromPrice, toPrice, keyword);
         return products;
-    } catch (error) {
-        return rejectWithValue("Something went wrong while fetching products")
+    } catch (error) {        
+        return rejectWithValue(error || "Something went wrong while fetching products")
     }
 })
 
@@ -37,7 +37,7 @@ export const getProductsWithFilteration = createAsyncThunk("products/getProducts
         const products = await getAllProductsWithfilteration(category, fromPrice, toPrice, keyword, sortBy, page, limit);
         return products;
     } catch (error) {
-        return rejectWithValue("Something went wrong while fetching products")
+        return rejectWithValue(error || "Something went wrong while fetching products")
     }
 })
 
@@ -51,7 +51,7 @@ export const removeProductwithId = createAsyncThunk("products/removeProductwithI
             length: products.length,
         };
     } catch (error) {
-        return rejectWithValue("Something went wrong while fetching products")
+        return rejectWithValue(error || "Something went wrong while fetching products")
     }
 })
 

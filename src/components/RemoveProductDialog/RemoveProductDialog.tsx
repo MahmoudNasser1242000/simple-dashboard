@@ -27,7 +27,7 @@ const RemoveProductDialog = ({productId, setLength}: {productId: string, setLeng
         if (length) {
             setLength(length);
         }
-    }, [length]);
+    }, [length, setLength]);
     
     return <>
         <Dialog>

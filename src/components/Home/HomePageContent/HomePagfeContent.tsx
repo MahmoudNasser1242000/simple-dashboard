@@ -64,7 +64,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
 
     useEffect(() => {
         dispatch(getProductsWithFilteration({category, fromPrice, toPrice, keyword, sortBy, page, limit}));
-    }, [category, fromPrice, toPrice, keyword, sortBy, page, limit]);
+    }, [category, fromPrice, toPrice, keyword, sortBy, page, limit, dispatch]);
 
     useEffect(() => {
         getAllCategories();
