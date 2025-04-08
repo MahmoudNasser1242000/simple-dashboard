@@ -111,7 +111,7 @@ const HomePagfeContent = ({ page, category }: { page: number, category: string }
 
         <div className="flex items-center justify-between mt-8 mb-5">
             <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                     <Button variant={"outline"} size={"icon"} className="rounded-sm focus:ring-none cursor-pointer p-5">
                         <ArrowDownWideNarrow className="size-6" />
                     </Button>
